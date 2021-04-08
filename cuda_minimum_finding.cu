@@ -28,7 +28,6 @@ int main()
     int *dev_a;
     int c[T];
     int *dev_c;
-    printf("crash here 0 \n");
     cudaMalloc((void**)&dev_a, N * sizeof(int));
     cudaMalloc((void**)&dev_c, T * sizeof(int));
     for (int i = 0; i < N; ++i)
