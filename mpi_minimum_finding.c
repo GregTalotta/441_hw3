@@ -26,10 +26,6 @@ int main(int argc, char *argv[])
         for (i = 0; i < N; i++)
         {
             a[i] = rand() % 100000;
-            if (a[i] == 0)
-            {
-                printf("index is: %d,  value is: %d", i, a[i]);
-            }
         }
     }
     MPI_Bcast(a, N, MPI_INT, 0, MPI_COMM_WORLD);
@@ -59,9 +55,10 @@ int main(int argc, char *argv[])
             {
                 min = temp[0];
             }
-            printf("this one found: %d\n", temp[0]);
         }
-        printf("Minimal value is: %d\n", min);
+        printf("Minimal value parallel: %d\n", min);
+        min = findMinimum(a, 0, N-1);
+        printf("Minimal value sequential: %d\n", min);
     }
     free(a);
     free(temp);
