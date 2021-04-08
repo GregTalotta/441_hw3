@@ -31,26 +31,18 @@ int main()
     int *dev_a;
     int c[T];
     int *dev_c;
-
     printf("crash here 0 \n");
     cudaMalloc((void**)&dev_a, N * sizeof(int));
     cudaMalloc((void**)&dev_c, T * sizeof(int));
-    // fill the array
     for (int i = 0; i < N; ++i)
     {
         a[i] = rand() % 1000000000;
     }
-
-    printf("crash here 1 \n");
     cudaMemcpy(dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice);
-    printf("crash here 2 \n");
     dim3 grid(1);
     dim3 threads(T);
     find_min <<<grid, threads >>> (dev_a, dev_c);
-
     cudaMemcpy(c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost);
-
-    printf("crash here 3 \n");
     cudaDeviceSynchronize();  // Waits for threads to finish
     int min = c[0];
     for(int i = 0; i < T; ++i){
@@ -58,6 +50,13 @@ int main()
             min = c[i];
             printf("Minimal value parallel with cuda is: %d\n", min);
         }
+        min = a[0];
+        for(int i =0; i < N; ++i){
+            if(min > a[i]){
+                min = a[i];
+            }
+        }
+        printf("Minimal value sequential: %d\n", min);
     }
     return 0;
 }
