@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
             if(temp[0]<min){
                 min = temp[0];
             }
+            printf("this one found: %d\n", temp[0]);
         }
         printf("Minimal value is: %d\n", min);
     }
