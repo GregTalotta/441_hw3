@@ -28,9 +28,9 @@ int main()
     printf("start\n");
     int *a;
     a = (int *)malloc(sizeof(int) * N);
-    // int *dev_a;
-    // int c[T];
-    // int *dev_c;
+    int *dev_a;
+    int c[T];
+    int *dev_c;
 
     printf("crash here 0 \n");
     // cudaMalloc((void**)&dev_a, N * sizeof(int));
