@@ -48,16 +48,16 @@ int main()
     for(int i = 0; i < T; ++i){
         if(min > c[i]){
             min = c[i];
-            printf("Minimal value parallel with cuda is: %d\n", min);
         }
-        min = a[0];
+    }
+    printf("Minimal value parallel with cuda is: %d\n", min);
+    min = a[0];
         for(int i =0; i < N; ++i){
             if(min > a[i]){
                 min = a[i];
             }
         }
         printf("Minimal value sequential: %d\n", min);
-    }
     return 0;
 }
 
