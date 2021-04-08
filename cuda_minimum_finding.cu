@@ -35,7 +35,7 @@ int main()
     printf("crash here 0 \n");
     cudaMalloc((void**)&dev_a, N * sizeof(int));
     cudaMalloc((void**)&dev_c, T * sizeof(int));
-    fill the array
+    // fill the array
     for (int i = 0; i < N; ++i)
     {
         a[i] = rand() % 1000000000;
