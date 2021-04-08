@@ -31,7 +31,7 @@ int main()
     cudaMemcpy(c, dev_c, COLUMNS * sizeof(int), cudaMemcpyDeviceToHost);
     int total = 0;
     for(int i = 0; i < COLUMNS; ++i){
-        total += COLUMNS[0];
+        total += c[0];
     }
     printf("Total sum of all elements is: %d\n", total);
     return 0;
