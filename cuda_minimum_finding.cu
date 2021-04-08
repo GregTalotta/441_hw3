@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "stdlib.h"
 
 #define N 8000000
 #define T 8
@@ -34,7 +35,7 @@ int main()
     // cudaMalloc((void**)&dev_a, N * sizeof(int));
     // cudaMalloc((void**)&dev_c, T * sizeof(int));
     //fill the array
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N; ++i)
     {
         a[i] = rand() % 1000000000;
     }
