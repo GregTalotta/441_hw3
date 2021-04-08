@@ -20,12 +20,16 @@ int main(int argc, char *argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 
     a = (int *)malloc(sizeof(int) * N);
-    temp = (int *)malloc(sizeof(int)*1);
+    temp = (int *)malloc(sizeof(int) * 1);
     if (rank == 0)
     {
-        for (i = 0; i < N; i++){
+        for (i = 0; i < N; i++)
+        {
             a[i] = rand() % 100000;
-            printf("value is: %d", a[i]);
+            if (a[i] == 0)
+            {
+                printf("index is: %d,  value is: %d", i, a[i]);
+            }
         }
     }
     MPI_Bcast(a, N, MPI_INT, 0, MPI_COMM_WORLD);
@@ -51,7 +55,8 @@ int main(int argc, char *argv[])
         for (int source = 1; source < p; source++)
         {
             MPI_Recv(temp, 1, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
-            if(temp[0]<min){
+            if (temp[0] < min)
+            {
                 min = temp[0];
             }
             printf("this one found: %d\n", temp[0]);
