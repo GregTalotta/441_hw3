@@ -34,6 +34,8 @@ int main()
         total += c[0];
     }
     printf("Total sum of all elements is: %d\n", total);
+    cudaFree(dev_a);
+    cudaFree(dev_c);
     return 0;
 }
                  

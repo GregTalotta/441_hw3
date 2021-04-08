@@ -57,6 +57,8 @@ int main()
             }
         }
         printf("Minimal value sequential: %d\n", min);
+    cudaFree(dev_a);
+    cudaFree(dev_c);
     return 0;
 }
 
