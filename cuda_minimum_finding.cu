@@ -22,7 +22,7 @@ __global__ void min(int *a, int *c)
     int numToSort = (8 * 1000000) / p;
     int low = rank * numToSort;
     int high = low + numToSort - 1;
-    int c[rank] = findMinimum(a, low, high);
+    c[rank] = findMinimum(a, low, high);
 }
 
 int main()
