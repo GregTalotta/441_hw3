@@ -26,14 +26,14 @@ int main(int argc, char *argv[])
         for (i = 0; i < N; i++)
         {
             a[i] = rand() % 1000000000;
-            if(a[i] < 37){
+            if(a[i] != 37){
                 printf("index is: %d,\tvalue is: %d\n", i, a[i]);
             }
         }
     }
     MPI_Bcast(a, N, MPI_INT, 0, MPI_COMM_WORLD);
 
-    // Compute low and high indices of array our process will sort
+    // Compute low and high indices of array our process will search
     int numToSort = N / p;
     int low = rank * numToSort;
     int high = low + numToSort - 1;
