@@ -4,6 +4,7 @@
 __global__ void add(int* a, int* c)
 {
     int row = blockIdx.x;
+    printf("row is: %d\n", row);
     int column = threadIdx.x;
     c[row] +=a[DIM*row+column];
 }
