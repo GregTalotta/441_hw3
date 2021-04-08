@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     {
         for (i = 0; i < N; i++)
         {
-            a[i] = rand() % 100000;
+            a[i] = rand() % 1000000000;
         }
     }
     MPI_Bcast(a, N, MPI_INT, 0, MPI_COMM_WORLD);
