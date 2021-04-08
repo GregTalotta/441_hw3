@@ -2,7 +2,7 @@
 
 #define N 8000000
 
-_device_ int findMinimum(int a[], int low, int high)
+__device__ int findMinimum(int a[], int low, int high)
 {
     int min = a[low];
     for (int i = low; i < high; ++i)
