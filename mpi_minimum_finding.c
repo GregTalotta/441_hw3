@@ -26,6 +26,9 @@ int main(int argc, char *argv[])
         for (i = 0; i < N; i++)
         {
             a[i] = rand() % 1000000000;
+            if(a[i] < 37){
+                printf("index is: %d,\tvalue is: %d\n", i, a[i]);
+            }
         }
     }
     MPI_Bcast(a, N, MPI_INT, 0, MPI_COMM_WORLD);
