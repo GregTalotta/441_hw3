@@ -1,14 +1,28 @@
 #include "stdio.h"
 #define DIM 8
+const int THREADS_PER_BLOCK = 8;
+const int NUM_BLOCKS = 8; 
 
 __global__ void add(int* a, int* c)
 {
-    __shared__ int chache[1];
+    __shared__ int chache[THREADS_PER_BLOCK];
     int tid = threadIdx.x + (blockIdx.x * blockDim.x);
-    int temp = a[tid];
-    chache[0] += temp;
-    __syncthreads();
-    c[blockIdx.x] += chache[0];
+    int cacheIndex = threadIdx.x;
+    int temp = 0;
+    temp = a[tid];
+    cache[cacheIndex] = temp;
+
+    int i = blockDim.x / 2;
+    while (i > 0)
+    {
+        if (cacheIndex < i)
+            cache[cacheIndex] += cache[cacheIndex + i];
+        __syncthreads();
+        i /= 2;
+    }
+    if (threadIdx.x == 0)         // if at thread 0 in this block
+        c[blockIdx.x] = cache[0]; // save the sum in global memory
+
 }
 
 int main()
@@ -29,7 +43,7 @@ int main()
     cudaMemcpy(dev_a, a, DIM * DIM * sizeof(int), cudaMemcpyHostToDevice);
 
     
-    add <<<DIM, DIM >>> (dev_a, dev_c);
+    add <<<NUM_BLOCKS, THREADS_PER_BLOCK >>> (dev_a, dev_c);
 
     cudaMemcpy(c, dev_c, DIM * sizeof(int), cudaMemcpyDeviceToHost);
     int total = 0;
@@ -42,4 +56,3 @@ int main()
     cudaFree(dev_c);
     return 0;
 }
-                 
