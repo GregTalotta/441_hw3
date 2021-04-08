@@ -28,6 +28,7 @@ __global__ void min(int *a, int *c)
 
 int main()
 {
+    printf("start\n");
     int num_threads = 8;
     int a[N];
     int *dev_a;
