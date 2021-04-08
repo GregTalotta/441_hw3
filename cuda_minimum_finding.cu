@@ -33,6 +33,7 @@ int main()
     int *dev_a;
     int c[num_threads];
     int *dev_c;
+    printf("crash here 0 \n");
     cudaMalloc((void**)&dev_a, N * sizeof(int));
     cudaMalloc((void**)&dev_c, num_threads * sizeof(int));
     for (int i = 0; i < N; i++)
