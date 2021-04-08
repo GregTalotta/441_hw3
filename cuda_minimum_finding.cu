@@ -38,7 +38,7 @@ int main()
     {
         a[i] = rand() % 1000000000;
     }
-    for(int i = 0; i < N; ++i){
+    for(int i = 0; i < T; ++i){
         c[i] = 1000000001;
     }
     cudaMemcpy(dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice);
