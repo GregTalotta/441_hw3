@@ -23,8 +23,10 @@ int main(int argc, char *argv[])
     temp = (int *)malloc(sizeof(int)*1);
     if (rank == 0)
     {
-        for (i = 0; i < N; i++)
+        for (i = 0; i < N; i++){
             a[i] = rand() % 100000;
+            printf("value is: %d", a[i]);
+        }
     }
     MPI_Bcast(a, N, MPI_INT, 0, MPI_COMM_WORLD);
 
