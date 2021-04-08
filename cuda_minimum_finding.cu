@@ -26,7 +26,8 @@ __global__ void find_min(int *a, int *c)
 int main()
 {
     printf("start\n");
-    int a[N];
+    int *a;
+    a = (int *)malloc(sizeof(int) * N);
     // int *dev_a;
     // int c[T];
     // int *dev_c;
