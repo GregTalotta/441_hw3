@@ -38,7 +38,11 @@ int main()
     {
         a[i] = rand() % 1000000000;
     }
+    for(int i = 0; i < N; ++i){
+        c[i] = 1000000001;
+    }
     cudaMemcpy(dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(dev_c, c, T * sizeof(int), cudaMemcpyHostToDevice);
     dim3 grid(1);
     dim3 threads(T);
     find_min <<<grid, threads >>> (dev_a, dev_c);
