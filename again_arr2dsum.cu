@@ -5,7 +5,7 @@ __global__ void add(int* a, int* c)
 {
     int row = blockIdx.x;
     int column = threadIdx.x;
-    c[row] +=a[row][column];
+    c[row] +=a[DIM*row+column];
 }
 
 int main()
