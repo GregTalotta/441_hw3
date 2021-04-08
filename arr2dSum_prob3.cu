@@ -1,41 +1,39 @@
 #include "stdio.h"
-#define COLUMNS 3
-#define ROWS 2
+#define COLUMNS 4
+#define ROWS 3
 
-__global__ void add(int* a, int* b, int* c)
+__global__ void add(int* a, int* c)
 {
-    int x = blockIdx.x;
-    int y = blockIdx.y;
-    int i = (COLUMNS * y) + x;
-    c[i] = a[i] + b[i];
+    int column = blockIdx.x;
+    int total = 0;
+    for(int i = 0; i < ROWS; ++i){
+        total += a[i][column];
+    }
+    c[column]=total;
 }
 
 int main()
 {
-    int a[ROWS][COLUMNS], b[ROWS][COLUMNS], c[ROWS][COLUMNS];
-    int* dev_a, * dev_b, * dev_c;
+    int a[ROWS][COLUMNS], c[COLUMNS];
+    int* dev_a, * dev_c;
 
     cudaMalloc((void**)&dev_a, ROWS * COLUMNS * sizeof(int));
-    cudaMalloc((void**)&dev_b, ROWS * COLUMNS * sizeof(int));
-    cudaMalloc((void**)&dev_c, ROWS * COLUMNS * sizeof(int));
+    cudaMalloc((void**)&dev_c, COLUMNS * sizeof(int));
 
     for (int y = 0; y < ROWS; y++)              // Fill Arrays
         for (int x = 0; x < COLUMNS; x++)
-            a[y][x] = 7, b[y][x] = 7;
+            a[y][x] = 7;
 
     cudaMemcpy(dev_a, a, ROWS * COLUMNS * sizeof(int), cudaMemcpyHostToDevice);
-    cudaMemcpy(dev_b, b, ROWS * COLUMNS * sizeof(int), cudaMemcpyHostToDevice);
 
-    dim3 grid(COLUMNS, ROWS);
-    add <<<grid, 1 >>> (dev_a, dev_b, dev_c);
+    add <<<1, COLUMNS >>> (dev_a, dev_c);
 
-    cudaMemcpy(c, dev_c, ROWS * COLUMNS * sizeof(int), cudaMemcpyDeviceToHost);
-
-    for (int y = 0; y < ROWS; y++)              // Output Arrays
-    {
-        for (int x = 0; x < COLUMNS; x++)
-            printf("[%d][%d]=%d ", y, x, c[y][x]);
-        printf("\n");
+    cudaMemcpy(c, dev_c, COLUMNS * sizeof(int), cudaMemcpyDeviceToHost);
+    int total = 0;
+    for(int i = 0; i < COLUMNS; ++i){
+        total += COLUMNS[0];
     }
+    printf("Total sum of all elements is: %d\n", total);
     return 0;
+}
                  
