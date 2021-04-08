@@ -1,6 +1,6 @@
 #include "stdio.h"
 
-#define N 8 * 1000000
+#define N 8000000
 
 _device_ int findMinimum(int a[], int low, int high)
 {
@@ -15,7 +15,7 @@ _device_ int findMinimum(int a[], int low, int high)
     return min;
 }
 
-__global__ void min(int a[], int c[])
+__global__ void min(int *a, int *c)
 {
     int rank = threadIdx.x;
     int p = sizeof(dev_c)/sizeof(int);
