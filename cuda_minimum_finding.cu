@@ -44,7 +44,7 @@ int main()
     cudaMemcpy(dev_c, c, T * sizeof(int), cudaMemcpyHostToDevice);
     dim3 grid(1);
     find_min <<<grid, T >>> (dev_a, dev_c);
-    cudaMemcpy(c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(c, dev_c, T * sizeof(int), cudaMemcpyDeviceToHost);
     cudaDeviceSynchronize();  // Waits for threads to finish
     int min = c[0];
     for(int i = 0; i < T; ++i){
