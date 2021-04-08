@@ -2,8 +2,13 @@
 
 #define N 8000000
 
-__device__ float findMinimum(int a[], int low, int high)
+__global__ void find_min(int *a, int *c)
 {
+    int rank = threadIdx.x;
+    int p = sizeof(c)/sizeof(int);
+    int numToSort = (8 * 1000000) / p;
+    int low = rank * numToSort;
+    int high = low + numToSort - 1;
     int min = a[low];
     for (int i = low; i < high; ++i)
     {
@@ -12,17 +17,7 @@ __device__ float findMinimum(int a[], int low, int high)
             min = a[i];
         }
     }
-    return min;
-}
-
-__global__ void find_min(int *a, int *c)
-{
-    int rank = threadIdx.x;
-    int p = sizeof(c)/sizeof(int);
-    int numToSort = (8 * 1000000) / p;
-    int low = rank * numToSort;
-    int high = low + numToSort - 1;
-    c[rank] = (int) findMinimum(a, low, high);
+    c[rank] = min;
     printf("crash here 2.5 \n");
 }
 
