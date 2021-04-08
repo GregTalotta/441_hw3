@@ -18,11 +18,11 @@ __device__ int findMinimum(int a[], int low, int high)
 __global__ void min(int *a, int *c)
 {
     int rank = threadIdx.x;
-    int p = sizeof(dev_c)/sizeof(int);
+    int p = sizeof(c)/sizeof(int);
     int numToSort = (8 * 1000000) / p;
     int low = rank * numToSort;
     int high = low + numToSort - 1;
-    int c[rank] = findMinimum(dev_a, low, high);
+    int c[rank] = findMinimum(a, low, high);
 }
 
 int main()
@@ -34,7 +34,7 @@ int main()
     int *dev_c;
     cudaMalloc((void**)&dev_a, N * sizeof(int));
     cudaMalloc((void**)&dev_c, num_threads * sizeof(int));
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
         a[i] = rand() % 1000000000;
     }
