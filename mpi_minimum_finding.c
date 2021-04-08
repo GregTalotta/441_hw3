@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
                 min = temp[0];
             }
         }
-        printf("Minimal value is: %d\n", temp);
+        printf("Minimal value is: %d\n", min);
     }
     free(a);
     free(temp);
