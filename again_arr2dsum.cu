@@ -3,9 +3,11 @@
 
 __global__ void add(int* a, int* c)
 {
-    int row = blockIdx.x;
-    int column = threadIdx.x;
-    c[row] += a[(DIM*row)+column];
+    __shared__ int chache[1];
+    int tid = threadIdx.x + (blockIdx.x * blockDim.x);
+    int temp += a[tid];
+    __syncthreads();
+    c[blockIdx.x] += temp;
 }
 
 int main()
@@ -25,6 +27,7 @@ int main()
     }
     cudaMemcpy(dev_a, a, DIM * DIM * sizeof(int), cudaMemcpyHostToDevice);
 
+    
     add <<<DIM, DIM >>> (dev_a, dev_c);
 
     cudaMemcpy(c, dev_c, DIM * sizeof(int), cudaMemcpyDeviceToHost);
