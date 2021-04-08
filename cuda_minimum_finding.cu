@@ -7,8 +7,7 @@
 __global__ void find_min(int *a, int *c)
 {
     int rank = threadIdx.x;
-    int p = sizeof(c)/sizeof(int);
-    int numToSort = (8 * 1000000) / p;
+    int numToSort = (8000000) / T;
     int low = rank * numToSort;
     int high = low + numToSort - 1;
     int min = a[low];
@@ -44,8 +43,7 @@ int main()
     cudaMemcpy(dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(dev_c, c, T * sizeof(int), cudaMemcpyHostToDevice);
     dim3 grid(1);
-    dim3 threads(T);
-    find_min <<<grid, threads >>> (dev_a, dev_c);
+    find_min <<<grid, T >>> (dev_a, dev_c);
     cudaMemcpy(c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost);
     cudaDeviceSynchronize();  // Waits for threads to finish
     int min = c[0];
