@@ -4,7 +4,7 @@
 
 __global__ void add(int* a, int* c)
 {
-    int column = blockIdx.x;
+    int column = threadIdx.x;
     int total = 0;
     for(int i = 0; i < ROWS; ++i){
         total += a[(COLUMNS*i) + column];
