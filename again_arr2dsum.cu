@@ -5,9 +5,10 @@ __global__ void add(int* a, int* c)
 {
     __shared__ int chache[1];
     int tid = threadIdx.x + (blockIdx.x * blockDim.x);
-    int temp += a[tid];
+    int temp = a[tid];
+    chache[0] += temp;
     __syncthreads();
-    c[blockIdx.x] += temp;
+    c[blockIdx.x] += chache[0];
 }
 
 int main()
