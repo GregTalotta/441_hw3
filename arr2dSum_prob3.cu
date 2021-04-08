@@ -7,7 +7,7 @@ __global__ void add(int* a, int* c)
     int column = blockIdx.x;
     int total = 0;
     for(int i = 0; i < ROWS; ++i){
-        total += a[COLUMNS*i + column];
+        total += a[(COLUMNS*i) + column];
     }
     c[column]=total;
 }
@@ -31,7 +31,7 @@ int main()
     cudaMemcpy(c, dev_c, COLUMNS * sizeof(int), cudaMemcpyDeviceToHost);
     int total = 0;
     for(int i = 0; i < COLUMNS; ++i){
-        total += c[0];
+        total += c[i];
     }
     printf("Total sum of all elements is: %d\n", total);
     cudaFree(dev_a);
