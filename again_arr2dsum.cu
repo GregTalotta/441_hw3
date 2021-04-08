@@ -50,7 +50,6 @@ int main()
     for (int i = 0; i < DIM; ++i)
     {
         total += c[i];
-        printf("c is: %d\n", c[i]);
     }
     printf("Total sum of all elements is: %d\n", total);
     cudaFree(dev_a);
