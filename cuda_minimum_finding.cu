@@ -19,12 +19,10 @@ __global__ void find_min(int *a, int *c)
         }
     }
     c[rank] = min;
-    printf("crash here 2.5 \n");
 }
 
 int main()
 {
-    printf("start\n");
     int *a;
     a = (int *)malloc(sizeof(int) * N);
     int *dev_a;
