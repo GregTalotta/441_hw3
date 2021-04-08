@@ -5,7 +5,7 @@ const int NUM_BLOCKS = 8;
 
 __global__ void add(int* a, int* c)
 {
-    __shared__ int chache[THREADS_PER_BLOCK];
+    __shared__ int cache[THREADS_PER_BLOCK];
     int tid = threadIdx.x + (blockIdx.x * blockDim.x);
     int cacheIndex = threadIdx.x;
     int temp = 0;
