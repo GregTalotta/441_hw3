@@ -75,6 +75,9 @@ int main()
   char *red;
   char *green;
   char *blue;
+  char *dev_red;
+  char *dev_green;
+  char *dev_blue;
 
   // Dynamically create enough memory for DIM * DIM array of char.
   // By making these dynamic rather than auto (e.g. char red[DIM][DIM])
@@ -82,9 +85,12 @@ int main()
   red = (char *)malloc(DIM * DIM * sizeof(char));
   green = (char *)malloc(DIM * DIM * sizeof(char));
   blue = (char *)malloc(DIM * DIM * sizeof(char));
-
+  cudaMalloc((void**)&dev_red, DIM * DIM * sizeof(char));
+  cudaMalloc((void**)&dev_green, DIM * DIM * sizeof(char));
+  cudaMalloc((void**)&dev_blue, DIM * DIM * sizeof(char));
   // Create random spheres at different coordinates, colors, radius
   Sphere spheres[SPHERES];
+  Sphere *dev_spheres;
   for (int i = 0; i < SPHERES; i++)
   {
     spheres[i].r = rnd(1.0f);
@@ -96,9 +102,15 @@ int main()
     spheres[i].radius = rnd(200.0f) + 40;
   }
 
-  drawSpheres(spheres, red, green, blue);
+  cudaMalloc((void**)&dev_spheres, SPHERES* sizeof(Sphere));
+  cudaMemcpy(dev_spheres, spheres, SPHERES* sizeof(Sphere), cudaMemcpyHostToDevice);
+
   dim3 grid(DIM, DIM);
-  kernel<<<grid, 1>>>(dev_charmap);
+  drawSpheres<<<grid, 1>>>(dev_spheres, dev_red, dev_green, dev_blue);
+
+  cudaMemcpy(red, dev_red, DIM * DIM * sizeof(char), cudaMemcpyDeviceToHost);
+  cudaMemcpy(green, dev_green, DIM * DIM * sizeof(char), cudaMemcpyDeviceToHost);
+  cudaMemcpy(blue, dev_blue, DIM * DIM * sizeof(char), cudaMemcpyDeviceToHost);
 
   RGBQUAD color;
   for (int i = 0; i < DIM; i++)
