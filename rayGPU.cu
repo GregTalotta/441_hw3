@@ -16,7 +16,7 @@ struct Sphere
   float x, y, z;
   // Tells us if a ray hits the sphere; return the
   // depth of the hit, or -infinity if the ray misses the sphere
-  float hit(float ox, float oy, float *n)
+  __device__ float hit(float ox, float oy, float *n)
   {
     float dx = ox - x;
     float dy = oy - y;
